@@ -139,7 +139,7 @@ public class HMusicController extends Frame implements ItemListener, AdjustmentL
 	setConstraints( 0, 0,  1, 1 );
 	add( caeliLabel, constraints );
 
-	caeliScroll = new Scrollbar( Scrollbar.VERTICAL, 22, 1, 0, 25 );
+	caeliScroll = new Scrollbar( Scrollbar.VERTICAL, 9, 1, 0, 10 );
 	caeliScroll.setMinimumSize( new Dimension( 30, SCROLL_HEIGHT ) );
 	caeliScroll.setPreferredSize( new Dimension( 30, SCROLL_HEIGHT ) );
 	caeliScroll.addAdjustmentListener( this );
@@ -159,7 +159,7 @@ public class HMusicController extends Frame implements ItemListener, AdjustmentL
 	setConstraints( 1, 0,  1, 1 );
 	add( planetLabel, constraints );
 
-	planetScroll = new Scrollbar( Scrollbar.VERTICAL, 19, 1, 0, 20 );
+	planetScroll = new Scrollbar( Scrollbar.VERTICAL, 9, 1, 0, 10 );
 	planetScroll.setMinimumSize( new Dimension( 30, SCROLL_HEIGHT ) );
 	planetScroll.setPreferredSize( new Dimension( 30, SCROLL_HEIGHT ) );
 	planetScroll.addAdjustmentListener( this );
@@ -179,7 +179,7 @@ public class HMusicController extends Frame implements ItemListener, AdjustmentL
 	setConstraints( 2, 0, 1, 1 );
 	add( triSizeLabel, constraints );
 
-	triSizeScroll = new Scrollbar( Scrollbar.VERTICAL, 198000, 100, 100, 200000 );
+	triSizeScroll = new Scrollbar( Scrollbar.VERTICAL, 99000, 100, 100, 100000 );
 	triSizeScroll.setMinimumSize( new Dimension( 30, SCROLL_HEIGHT ) );
 	triSizeScroll.setPreferredSize( new Dimension( 30, SCROLL_HEIGHT ) );
 	triSizeScroll.addAdjustmentListener( this );
