@@ -1,1 +1,2 @@
-*.class
+display/*.class
+event/*.class

@@ -1,0 +1,13 @@
+K 6
+ignore
+V 20
+*.class
+TAGS
+*~
+\#*
+
+K 14
+svn:executable
+V 1
+*
+END

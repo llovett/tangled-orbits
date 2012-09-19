@@ -8,7 +8,6 @@ import traer.physics.*;
 import java.awt.*;
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
-import synth.*;
 import com.softsynth.jsyn.*;
 import oscP5.*;
 import netP5.*;
@@ -91,7 +90,6 @@ public class HMusic extends PApplet implements IntersectionEventListener {
     private SolarParticle sun;					// Wandering particle at the center of all
     private StellaCaeli caeli;					// "The Heavens"
     private Triangulation dustTriangulation;
-    private LizSynth synth;	// The synthesizer
     private Timer noteTimer;	// Puts a minimum distance in-between notes
     Random rand;
     
@@ -106,8 +104,6 @@ public class HMusic extends PApplet implements IntersectionEventListener {
 
     public void setup() {
 	size( screen.width, screen.height, OPENGL );
-	// size( screen.width, screen.height, JAVA2D );
-	// smooth();
 
 	ps = new ParticleSystem();
 	ps.setIntegrator(ParticleSystem.MODIFIED_EULER);
