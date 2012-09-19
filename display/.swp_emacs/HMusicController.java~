@@ -1,0 +1,29 @@
+package display;
+
+import java.awt.*;
+
+public class HMusicController extends Frame {
+
+    private HMusic parent;
+
+    public HMusicController( HMusic parent ) {
+	this.parent = parent;
+	constructComponents();
+    }
+
+    public static void constructComponents() {
+	setLayout(new BorderLayout());
+	setTitle("HMusicController");
+
+	setResizable(false);
+	// From HMusicWrapper.java:
+	// ==================================================
+	// setMinimumSize(new Dimension(hm.getWidth(),
+	// 			     hm.getHeight()));
+	// setPreferredSize(new Dimension(hm.getWidth(),
+	// 			       hm.getHeight()));
+	
+	Scrollbar calieScroll = new Scollbar( 
+    }
+
+}

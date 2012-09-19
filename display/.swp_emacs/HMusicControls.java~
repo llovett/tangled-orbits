@@ -1,0 +1,11 @@
+package display;
+
+public class HMusicControllableFields {
+
+    /* DENSITY OF STARS IN SKY
+     *
+     * range: 0.0 - 1.0
+     * */
+    public double CAELI_DENSITY;
+
+}

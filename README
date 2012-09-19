@@ -1,0 +1,80 @@
+##################
+# tangled-orbits #
+# README	 #
+##################
+
+COMPILING AND RUNNING
+-------------------------------
+
+1. COMPILING tangled-orbits
+
+Compiling the project should be as easy as typing `make` into the command-line.
+
+2. RUNNING tangled-orbits
+
+Right now, running tangled-orbits requires you to change Java's library
+path. Fortunately, this is already done for you in the Makefile. To run
+tangled-orbits, just type `make run` into the command-line.
+
+
+WHAT ARE ALL THESE FILES?
+-------------------------------
+HMusic.java			The main program (a PApplet, or Processing Applet)
+
+HMusicWrapper.java		The graphical window that wraps HMusic
+
+HParticle.java			Abstract class used as the superclass for all
+				particle types used in HMusic
+
+HTriangle.java			A triangle in HMusic
+
+MoonParticle.java		The smallest kind of HParticle. Nothing orbits a MoonParticle.
+
+PlanetParticle.java		Slightly larger than a MoonParticle, also a type
+				of HParticle. MoonParticles orbit PlanetParticles.
+
+SolarParticle.java		The largest kind of HParticle. PlanetParticles
+				orbit SolarParticles. SolarParticles do not
+				orbit anything, but wander aroundrandomly.
+
+Makefile			Used to compile and run everything in tangled-orbits.
+
+jsyn.jar			The jSyn synthesis library.
+
+Physics.jar			The Traer physics library.
+
+processing/opengl		Contains all the files necessary for running
+				with OPENGL (see bugs/other notes).
+
+BUGS / OTHER NOTES
+-------------------------------
+
+1. I am constantly changing how I think the relationships between particles
+should be handled. For example, should MoonParticles only be accessible through
+their PlanetPartile orbit-ees? If yes, this helps to make the program feel more
+organized. If no, it's much easier to grab all the MoonParticles in the main
+program and do stuff with them. Be aware that what HParticle child classes exist
+and how they behave changes A LOT right now.
+
+2. For some reason, I can never get OPENGL to behave very well under
+Linux. Theoretically, every file we need to get that running should be in
+processing/opengl, but there is perpetually some mysterious file reported
+missing. If you manage to find that file and add it to the Java path, Java will
+still manage to find some other file that's not there. Help with this would be
+greatly appreciated.
+
+3. Probably the most help I need right now is building the synthesizer in
+jSyn. Some useful links:
+
+http://www.softsynth.com/jsyn/			- the homepage for jSyn
+http://www.softsynth.com/jsyn/docs/javadocs/	- javadoc reference for jSyn
+- user's guide (supa-nice!)
+http://www.softsynth.com/jsyn/tutorial/		- official jSyn tutorial
+
+-------------------------------
+
+Thank you for helping me with this project! If you have any questions, please
+email me at:
+
+      llovett@cs.oberlin.edu
+

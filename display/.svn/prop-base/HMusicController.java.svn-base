@@ -1,0 +1,9 @@
+K 6
+ignore
+V 20
+*.class
+TAGS
+*~
+\#*
+
+END
