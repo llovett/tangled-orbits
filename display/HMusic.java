@@ -340,7 +340,6 @@ public class HMusic extends PApplet implements IntersectionEventListener {
 
 	// Which edge was crossed?
 	ArrayList<Particle> pts = e.getTriangle().getPoints();
-	// I really wish I knew this function existed sooner....
 	double e1 = java.awt.geom.Line2D.ptLineDist( pts.get( 0 ).position().x(),
 						     pts.get( 0 ).position().y(),
 						     pts.get( 1 ).position().x(),

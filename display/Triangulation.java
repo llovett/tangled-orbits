@@ -28,7 +28,7 @@ public class Triangulation {
 
     // Random # generator
     Random rand;
-    
+
     public Triangulation( PApplet parent ) {
 	this.parent = parent;
 	triangles = new ArrayList<HTriangle>();
@@ -102,7 +102,7 @@ public class Triangulation {
 	}
 	return false;
     }
-	
+
     public Iterator<HTriangle> iterator() {
 	return triangles.iterator();
     }
@@ -129,7 +129,6 @@ public class Triangulation {
      * @param p - The point to find within a triangle.
      * */
     public void highlightAtPoint( Point p ) {
-	int count = 0;
 	for ( HTriangle t : triangles ) {
 	    if ( t.containsPoint( p ) )
 		t.registerPoint( p );
@@ -150,9 +149,8 @@ public class Triangulation {
 		HashSet<Point> ips = tri.getIntersectingPoints();
 		for ( Point p : ips ) {
 		    for ( IntersectionEventListener l : listeners )
-			l.intersectionEventReceived( new IntersectionEvent( tri, p) );
+			l.intersectionEventReceived( new IntersectionEvent(tri, p) );
 		}
-									
 	    }
 	}
     }
@@ -171,9 +169,10 @@ public class Triangulation {
 		continue;
 	    }
 
+	    // Remove triangles that are too large. Give some time to adjust in size.
 	    if (t_curr.size() > TRIANGLE_THRESH && t_curr.getAge() > HMusic.MIN_TRIANGLE_AGE)
 		ti.remove();
-	    else if ( t_curr.getLongestEdge() > TRIANGLE_DIST_THRESH )
+	    else if ( t_curr.getLongestEdge() > TRIANGLE_DIST_THRESH && t_curr.getAge() > HMusic.MIN_TRIANGLE_AGE )
 		ti.remove();
 	}
 
@@ -181,7 +180,7 @@ public class Triangulation {
 	for (int i = 0; i<plist.size(); i++) {
 	    Particle point1 = plist.get(i);
 	    ArrayList<Particle> otherParticles = new ArrayList<Particle>();
-	    
+
 	    // Find other close moons
 	    for (int j = 0; j<plist.size() && otherParticles.size() < 2; j++) {
 		if (j == i) continue;
@@ -191,7 +190,6 @@ public class Triangulation {
 		    <= Math.sqrt(TRIANGLE_THRESH*2))
 
 		    otherParticles.add(point2);
-
 	    }
 
 	    if (otherParticles.size() == 2) {
@@ -205,7 +203,7 @@ public class Triangulation {
 		    if (tri.equals(tt))
 			skip = true;
 		if (skip) continue;
-		
+
 		int theRed, theGreen, theBlue;
 		if ( r1 == r2 )
 		    theRed = r1;
@@ -225,7 +223,7 @@ public class Triangulation {
 	}
     }
 
-    
+
     ////////////////////////////////
     // METHODS FOR THE CONTROLLER //
     ////////////////////////////////
@@ -305,7 +303,7 @@ public class Triangulation {
 	public int getAge() {
 	    return age;
 	}
-	
+
 	public void setColor(int r, int g, int b) {
 	    baseColor = new Color(r, g, b);
 	    lightColor = baseColor.brighter().brighter().brighter();	// This method exists?!
@@ -315,7 +313,7 @@ public class Triangulation {
 	 * test2
 	 *
 	 * */
-	private int test2( double px, double py, double m, double b ) {    
+	private int test2( double px, double py, double m, double b ) {
 	    if (py < m * px + b ) {
 		return -1; // point is under line
 	    }else if ( py == m * px + b ){
@@ -329,22 +327,16 @@ public class Triangulation {
 	 * test1
 	 *
 	 * */
-	private boolean test1(double px, double py, double m,double b, double lx,double ly) {     
-	    return (test2(px,py, m,b) == test2(lx,ly,m,b));    
+	private boolean test1(double px, double py, double m,double b, double lx,double ly) {
+	    return (test2(px,py, m,b) == test2(lx,ly,m,b));
 	}
 
 	/**
 	 * containsPoint( p )
 	 *
 	 * Returns whether or not the Point p is contained within this triangle.
-	 *
-	 * The math herein is taken from this page:
-	 * http://stackoverflow.com/questions/6187735/
-	 * if-point-is-inside-a-triangle-help-when-point-is-on-the-boundary-of-triangle
-	 * 
 	 * */
 	public boolean containsPoint (Point p) {
-
 	    double x0 = p1.position().x();
 	    double y0 = p1.position().y();
 	    double x1 = p2.position().x();
@@ -355,32 +347,37 @@ public class Triangulation {
 	    double px = p.getX();
 	    double py = p.getY();
 
-	    boolean line1, line2, line3;    
-	    double m01 = (y1-y0)/(x1-x0);    
-	    double b01 = m01 * -x1 + y1;    
-	    double m02, m12, b02, b12;    
-	    m02 = (y2-y0)/(x2-x0);    
-	    m12 = (y2-y1)/(x2-x1);    
-	    b02 = m02 * -x2 + y2;    
+	    boolean line1, line2, line3;
+	    // Getting y-intercepts and slopes for triangle sides
+	    double m01 = (y1-y0)/(x1-x0);
+	    double b01 = m01 * -x1 + y1;
+	    double m02, m12, b02, b12;
+	    m02 = (y2-y0)/(x2-x0);
+	    m12 = (y2-y1)/(x2-x1);
+	    b02 = m02 * -x2 + y2;
 	    b12 = m12 * -x2 + y2;
 
-	    // vertical line checks
-	    if( x1 == x0 ) {    
-		line1 = ( (px <= x0) == (x2 <= x0) );    
-	    } else {    
-		line1 = test1( px, py, m01, b01,x2,y2);    
+	    // Check for a vertical line. Point must be on same side of the vertical
+	    // line as the third point.
+	    if( x1 == x0 ) {
+		line1 = ( (px <= x0) == (x2 <= x0) );
+	    } else {
+		// Not vertical line. Make sure point is on the same side of the line with
+		// specified slope and y-intercept as the given (x,y) coordinate (other point
+		// on the triangle)
+		line1 = test1( px, py, m01, b01, x2, y2 );
 	    }
 
-	    if( x1 == x2 ) {    
-		line2 = ( (px <= x2) == (x0 <= x2) );    
-	    } else {    
-		line2 = test1(px,py, m12, b12,x0,y0);    
+	    if( x1 == x2 ) {
+		line2 = ( (px <= x2) == (x0 <= x2) );
+	    } else {
+		line2 = test1( px, py, m12, b12, x0, y0 );
 	    }
 
-	    if( x2 == x0 ) {    
+	    if( x2 == x0 ) {
 		line3 = ( (px <= x0 ) == (x1 <= x0) );
-	    } else {    
-		line3 = test1(px, py, m02,b02,x1,y1);    
+	    } else {
+		line3 = test1( px, py, m02, b02, x1, y1);
 	    }
 
 	    return line1 && line2 && line3;
@@ -460,7 +457,7 @@ public class Triangulation {
 
 	    Particle ep1, ep2;
 	    ep1 = ep2 = null;
-	    
+
 	    if (Math.max(Math.max(e1, e2), e3) == e3) {
 		theEdge = e1;
 		ep1 = (p1.position().x() < p2.position().x()? p1 : p2);
@@ -485,7 +482,7 @@ public class Triangulation {
 		return Math.abs(thePoint.position().y() - ep2.position().y());
 	    if (ep1.position().y() == ep2.position().y())
 		return Math.abs(thePoint.position().x() - ep2.position().x());
-	    
+
 	    double slope = ((double)(ep1.position().y() - ep2.position().y()))/(ep1.position().x() - ep2.position().x());
 	    double perpSlope = -1.0 / slope;
 
@@ -517,7 +514,7 @@ public class Triangulation {
 		    }
 		}
 	    }
-	    
+
 	    return ptList.isEmpty() && otherPts.isEmpty();
 	}
 
@@ -563,7 +560,7 @@ public class Triangulation {
 		"("+p2.position().x()+","+p2.position().y()+"), "+
 		"("+p3.position().x()+","+p3.position().y()+") >";
 	}
-	
+
     }
-	
+
 }
