@@ -21,9 +21,7 @@ JFLAGS = -g -cp $(CLASSPATH)
 ############
 PACKAGES = \
 	event \
-	display \
-	synth
-
+	display
 
 ###########################
 # GET READY FOR BUILDING! #
@@ -32,7 +30,6 @@ export TO_ROOT:= $(CURDIR)
 
 # This GL_DIR value is valid for MacOS X.
 GL_DIR		= $(TO_ROOT)/macgl:$(TO_ROOT)/opengl/gluegen-rt.jar:$(TO_ROOT)/opengl/jogl.jar:$(TO_ROOT)/opengl/opengl.jar:$(TO_ROOT)/processing/opengl/javax:$(TO_ROOT)/processing/opengl:$(TO_ROOT)/processing/opengl/com
-# GL_DIR		= $(TO_ROOT)/unixgl:$(TO_ROOT)/opengl.jar:$(TO_ROOT)/opengl/com:$(TO_ROOT)/opengl/gluegen-rt.jar:$(TO_ROOT)/opengl/javax::$(TO_ROOT)/opengl/jogl.jar:$(TO_ROOT)/opengl/opengl.jar
 CLASSPATH	= $(TO_ROOT):$(TO_ROOT)/core.jar:$(TO_ROOT)/jsyn.jar:$(TO_ROOT)/oscP5.jar:$(TO_ROOT)/traer:$(GL_DIR)
 
 ifdef PACKAGE
