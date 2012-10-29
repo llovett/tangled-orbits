@@ -20,7 +20,7 @@ public class HMusicController extends Frame implements ItemListener, AdjustmentL
     OscP5 osc;
     public static final int OSC_PORT_RCV = 13000;
     public static final int OSC_PORT_SEND = 12500;	// Should be same as iPad
-    public String ipadAddress = "10.0.1.8";	// So should this.
+    public String ipadAddress = "10.105.60.234";	// So should this.
 
 
     // Presets
