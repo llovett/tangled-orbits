@@ -1,4 +1,4 @@
-package display;
+ package display;
 
 import display.*;
 import event.*;
@@ -13,6 +13,8 @@ import oscP5.*;
 import netP5.*;
 
 public class HMusic extends PApplet implements IntersectionEventListener {
+
+    public static final boolean USE_MOUSE = true;
 
     ///////////////////
     // OSC CONSTANTS //
@@ -88,6 +90,7 @@ public class HMusic extends PApplet implements IntersectionEventListener {
     private ArrayList<MoonParticle> moons;
     private CopyOnWriteArrayList<PlanetParticle> planets;	// Slightly larger particles than "dust"
     private SolarParticle sun;					// Wandering particle at the center of all
+
     private StellaCaeli caeli;					// "The Heavens"
     private Triangulation dustTriangulation;
     private Timer noteTimer;	// Puts a minimum distance in-between notes
@@ -97,7 +100,7 @@ public class HMusic extends PApplet implements IntersectionEventListener {
     private HMusicController controller;		// The control panel (ugly Java AWT thing)
 
     // GLOBAL VARS
-    private boolean onoff = false;			// off by default
+    private boolean onoff = true;			// off by default
     private boolean noteGate = true;			// whether or not we will report an intersection
     private static boolean attractionOn;
     private long noteDelayTime = 10L;			// 10 ms between notes minimum!
@@ -116,7 +119,8 @@ public class HMusic extends PApplet implements IntersectionEventListener {
 
 	planets = new CopyOnWriteArrayList<PlanetParticle>();
 	moons = new ArrayList<MoonParticle>();
-	sun = new SolarParticle ( this, ps );
+
+	sun = new SolarParticle( this, ps );
 
 	// Add planets to the sun
 	for (int i=0; i<NUM_PLANETS; i++)
@@ -151,7 +155,7 @@ public class HMusic extends PApplet implements IntersectionEventListener {
 	// Initialize and display controller window.
 	controller = new HMusicController( this );
 	// Don't use the controller window. Instead, use the iPad!
-	// controller.setVisible( true );
+	controller.setVisible( true );
 
 	// Initialize the timer
 	noteTimer = new Timer();
@@ -246,7 +250,7 @@ public class HMusic extends PApplet implements IntersectionEventListener {
     public void draw() {
 	if ( onoff ) {
 	    // Perform physics-related operations
-	    // updateUserPosition();
+	    updateUserPosition();
 	    ps.tick();
 
 	    // ==================================================
